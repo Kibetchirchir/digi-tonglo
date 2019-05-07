@@ -1,0 +1,27 @@
+dist: xenial
+language: python
+
+python:
+  - "3.6.7"
+
+# install dependencies
+install:
+  - pip install -r requirements.txt
+  - pip install coveralls
+
+addons:
+  postgresql: "9.4"
+
+
+before_script:
+  - psql -c 'create database olympians;' -U postgres
+
+# run tests
+
+script:
+  - coverage run --source= manage.py test
+  - coverage report
+
+after_success:
+  - coverallslanguage: python
+  - coveralls
