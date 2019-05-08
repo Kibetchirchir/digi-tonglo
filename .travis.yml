@@ -4,6 +4,9 @@ language: python
 python:
   - "3.6.7"
 
+env:
+  - CC_TEST_REPORTER_ID=c338d69e006ee19f75f76aa4dba72c6aa27b8fd7f92b0c961d57c904a87fce92
+
 # install dependencies
 install:
   - pip install -r requirements.txt
@@ -14,7 +17,9 @@ addons:
 
 
 before_script:
-  - psql -c 'create database olympians;' -U postgres
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 
 # run tests
 
@@ -25,3 +30,4 @@ script:
 after_success:
   - coverallslanguage: python
   - coveralls
+  - -./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
