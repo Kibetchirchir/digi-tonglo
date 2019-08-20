@@ -5,7 +5,7 @@ python:
   - "3.6.7"
 
 env:
-  - CC_TEST_REPORTER_ID=c338d69e006ee19f75f76aa4dba72c6aa27b8fd7f92b0c961d57c904a87fce92
+  - CC_TEST_REPORTER_ID=db706b104694c15080ea675f13aa0073dc49c9565c69caa6f2bcd12f355e341b
 
 # install dependencies
 install:
@@ -25,6 +25,8 @@ before_script:
 # run tests
 
 script:
+  - python manage.py makemigrations authentication
+  - python manage.py migrate authentication
   - coverage run --source= manage.py test
   - coverage report
 
