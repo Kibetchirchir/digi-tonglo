@@ -1,0 +1,15 @@
+[run]
+include = 
+    *authentication*
+    *digitonglo*
+
+omit =
+  *migrations*
+  *tests*
+  manage.py
+  *settings*
+
+branch = True
+
+[report]
+
