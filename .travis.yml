@@ -30,7 +30,8 @@ script:
   - coverage run --source= manage.py test
   - coverage report
 
+
 after_success:
   - coverallslanguage: python
   - coveralls
-  - -./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
