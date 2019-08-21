@@ -5,7 +5,7 @@ python:
   - "3.6.7"
 
 env:
-  - CC_TEST_REPORTER_ID=db706b104694c15080ea675f13aa0073dc49c9565c69caa6f2bcd12f355e341b
+  - CC_TEST_REPORTER_ID=b12ab7d502152c8ad1222b8bd574a39caee67cc4e939d062ebd2879c8fc4ebc1
 
 # install dependencies
 install:
