@@ -8,6 +8,8 @@ omit =
   *tests*
   manage.py
   *settings*
+  *venv*
+  *env*
 
 branch = True
 
