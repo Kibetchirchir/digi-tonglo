@@ -74,3 +74,36 @@ class UserTest(APITestCase):
         self.assertEqual(result["email"], "chirchir@gmail.com")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
+
+class UserLogin(APITestCase):
+    client = APIClient()
+
+    def setUp(self):
+        self.user = {
+            "user": {
+                "email": "chirchir@gmail.com",
+                "username": "vokechi",
+                "password": "07921513542"
+            }
+        }
+
+        self.wrong_user = {
+            "user": {
+                "email": "chirchir@gmail.com",
+                "username": "vokechi",
+                "password": "079215542"
+            }
+        }
+
+        self.client.post('/api/users/', self.user, format='json')
+
+    def test_login_user(self):
+        response = self.client.post('/api/users/login/', self.user, format='json')
+        result = json.loads(response.content)
+        self.assertEqual(result["email"], "chirchir@gmail.com")
+
+    def test_wrong_credentials(self):
+        response = self.client.post('/api/users/login/', self.wrong_user, format='json')
+        result = json.loads(response.content)
+
+        self.assertEqual(result["non_field_errors"], ["Invalid email or password provided."])
