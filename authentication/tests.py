@@ -15,7 +15,7 @@ class UserManagerTestCase(TestCase):
             "password": "071232445"
         }
 
-        self.user1 = User.objects.create_user(username='test', email='test@test.com', password='eser3456')
+        self.user1 = User.objects.create_user(username='test', email='test@test.com', password='eser3456', phone_number='test')
 
     def test_user_saved(self):
         """User is saved on the db"""
@@ -27,7 +27,7 @@ class UserManagerTestCase(TestCase):
         :return:
         """
         with self.assertRaises(TypeError) as error_message:
-            User.objects.create_user(None, self.user["email"])
+            User.objects.create_user(None, self.user["email"], phone_number='yesdy')
 
         self.assertEqual(str(error_message.exception), 'Users must have a username.')
 
@@ -37,7 +37,7 @@ class UserManagerTestCase(TestCase):
         :return:
         """
         with self.assertRaises(TypeError) as error_message:
-            User.objects.create_user(self.user["username"], None)
+            User.objects.create_user(self.user["username"], None, phone_number='dfsdfsdfdsfdsf')
 
         self.assertEqual(str(error_message.exception), 'Users must have an email address.')
 
@@ -48,7 +48,7 @@ class UserManagerTestCase(TestCase):
         """
         # test = self.user1
         with self.assertRaises(IntegrityError):
-            User.objects.create_user(username='test', email='test@test.com', password='eser3456')
+            User.objects.create_user(username='test', email='test@test.com', password='eser3456', phone_number='test')
 
 
 class UserTest(APITestCase):
@@ -60,7 +60,8 @@ class UserTest(APITestCase):
             "user": {
                 "email": "chirchir@gmail.com",
                 "username": "vokechi",
-                "password": "07921513542"
+                "password": "079215135421",
+                "phone_number": "079215135421"
             }
         }
 
@@ -71,6 +72,7 @@ class UserTest(APITestCase):
         # hit the API endpoint
         response = self.client.post('/api/users/', self.user, format='json')
         result = json.loads(response.content)
+        print(result)
         self.assertEqual(result["email"], "chirchir@gmail.com")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -83,7 +85,8 @@ class UserLogin(APITestCase):
             "user": {
                 "email": "chirchir@gmail.com",
                 "username": "vokechi",
-                "password": "07921513542"
+                "password": "079215135421",
+                "phone_number": "079215135421"
             }
         }
 
@@ -91,7 +94,8 @@ class UserLogin(APITestCase):
             "user": {
                 "email": "chirchir@gmail.com",
                 "username": "vokechi",
-                "password": "079215542"
+                "password": "0792155421",
+                "phone_number": "079215135421"
             }
         }
 
