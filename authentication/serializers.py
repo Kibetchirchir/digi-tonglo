@@ -31,6 +31,8 @@ class RegistrationSerializer(serializers.ModelSerializer):
         }
     )
 
+    phone_number = serializers.CharField(max_length=12, min_length=12)
+
     # The client should not be able to send a token along with a registration
     # request. Making `token` read-only handles that for us.
 
@@ -38,7 +40,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
         model = User
         # List all of the fields that could possibly be included in a request
         # or response, including fields specified explicitly above.
-        fields = ['email', 'username', 'password']
+        fields = ['email', 'username', 'password', 'phone_number']
         extra_kwargs = {
             "username": {
                 "error_messages": {
