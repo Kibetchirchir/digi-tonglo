@@ -15,6 +15,13 @@ def validate_password():
         "Only numbers and letters are allowed in password")
 
 
+def validate_phone():
+    return RegexValidator(
+        r'^07|254',
+        "The phone number is should start with 07 or 254(the code)"
+    )
+
+
 class RegistrationSerializer(serializers.ModelSerializer):
     """Serializers registration requests and creates a new user."""
     # Ensure passwords are at least 8 characters long, no longer than 128
@@ -31,7 +38,8 @@ class RegistrationSerializer(serializers.ModelSerializer):
         }
     )
 
-    phone_number = serializers.CharField(max_length=12, min_length=12)
+    phone_number = serializers.CharField(max_length=12, min_length=10,
+                                         validators=[validate_phone()])
 
     # The client should not be able to send a token along with a registration
     # request. Making `token` read-only handles that for us.
