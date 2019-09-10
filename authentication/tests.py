@@ -61,7 +61,25 @@ class UserTest(APITestCase):
                 "email": "chirchir@gmail.com",
                 "username": "vokechi",
                 "password": "079215135421",
-                "phone_number": "079215135421"
+                "phone_number": "0792151354"
+            }
+        }
+
+        self.user_254 = {
+            "user": {
+                "email": "chirchir@gmail.com",
+                "username": "vokechi",
+                "password": "079215135421",
+                "phone_number": "254792151354"
+            }
+        }
+
+        self.user_wrong_number = {
+            "user": {
+                "email": "chirchir@gmail.com",
+                "username": "vokechi",
+                "password": "079215135421",
+                "phone_number": "9215135421"
             }
         }
 
@@ -72,9 +90,18 @@ class UserTest(APITestCase):
         # hit the API endpoint
         response = self.client.post('/api/users/', self.user, format='json')
         result = json.loads(response.content)
-        print(result)
         self.assertEqual(result["email"], "chirchir@gmail.com")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_wrong_phone_number_validate(self):
+        """
+        test user with a number with error
+        :return:
+        """
+        response = self.client.post('/api/users/', self.user_wrong_number, format='json')
+        result = json.loads(response.content)
+        self.assertEqual(result["phone_number"], ["The phone number is should start with 07 or 254(the code)"])
+        self.assertNotEqual(response.status_code, status.HTTP_201_CREATED)
 
 
 class UserLogin(APITestCase):
