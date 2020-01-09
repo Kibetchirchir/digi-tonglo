@@ -38,7 +38,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
         }
     )
 
-    phone_number = serializers.CharField(max_length=12, min_length=10,
+    phone_number = serializers.CharField(
                                          validators=[validate_phone()])
 
     # The client should not be able to send a token along with a registration
